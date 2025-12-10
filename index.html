@@ -21,10 +21,6 @@
       margin: 0 0 6px;
       font-size: 22px;
     }
-    h2 {
-      margin: 24px 0 10px;
-      font-size: 18px;
-    }
     p {
       margin: 0 0 8px;
       color: #c1c7d4;
@@ -42,7 +38,7 @@
     }
     @media (min-width: 900px) {
       .grid-2 {
-        grid-template-columns: 1.4fr 1fr;
+        grid-template-columns: 1.5fr 1fr;
       }
       .grid-3 {
         grid-template-columns: repeat(3, 1fr);
@@ -93,7 +89,6 @@
     <h1>Dashboard Global – Risque de Krach & Marchés</h1>
     <p class="small">
       Suivi en temps réel des marchés US / Europe / Asie, volatilité, sentiment & macro.
-      Données live via widgets TradingView + sources publiques.
     </p>
   </header>
 
@@ -102,7 +97,7 @@
     <!-- BANDEAU TICKER GLOBAL -->
     <div class="card">
       <div class="card-header">
-        <div class="card-title">Ticker global (indices, devises, or, crypto)</div>
+        <div class="card-title">Ticker global (indices, or, pétrole, crypto)</div>
         <span class="badge">Live TradingView</span>
       </div>
       <div class="tradingview-widget-container">
@@ -112,8 +107,8 @@
           "symbols": [
             {"proName": "FOREXCOM:SPXUSD", "title": "S&P 500"},
             {"proName": "FOREXCOM:NSXUSD", "title": "Nasdaq 100"},
-            {"proName": "INDEX:EU50", "title": "Euro Stoxx 50"},
-            {"proName": "CAC:FR40", "title": "CAC 40"},
+            {"proName": "CURRENCYCOM:EU50", "title": "Euro Stoxx 50"},
+            {"proName": "INDEX:CAC40", "title": "CAC 40"},
             {"proName": "INDEX:NKY", "title": "Nikkei 225"},
             {"proName": "TVC:VIX", "title": "VIX"},
             {"proName": "TVC:US10Y", "title": "US 10Y"},
@@ -129,25 +124,21 @@
         }
         </script>
       </div>
-      <p class="small">Utilise cette ligne pour voir en un coup d’œil si le marché est en mode risque-on ou risque-off.</p>
+      <p class="small">En un coup d’œil : indices, volatilité, taux, or, pétrole, bitcoin.</p>
     </div>
 
     <!-- GRID PRINCIPALE -->
     <div class="grid grid-2" style="margin-top:16px;">
 
-      <!-- COLONNE GAUCHE : MARCHÉS -->
+      <!-- COLONNE GAUCHE -->
       <div class="grid">
 
-        <!-- VUE GLOBALE MARCHÉS -->
+        <!-- MARCHÉS PAR RÉGION -->
         <div class="card">
           <div class="card-header">
-            <div class="card-title">Vue globale marchés (US / Europe / Asie)</div>
-            <span class="badge">Market Overview</span>
+            <div class="card-title">Indices majeurs par région</div>
+            <span class="badge">Market overview</span>
           </div>
-          <p class="small">
-            Surveille les indices majeurs par région. Une cassure simultanée sur US + Europe + Asie est un
-            signal fort de stress global.
-          </p>
           <div class="tradingview-widget-container" style="height: 520px;">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
@@ -194,15 +185,14 @@
           </div>
         </div>
 
-        <!-- CALENDRIER ECONOMIQUE -->
+        <!-- CALENDRIER ÉCONOMIQUE -->
         <div class="card">
           <div class="card-header">
-            <div class="card-title">Événements macro (calendrier économique)</div>
-            <span class="badge">TradingView – Economic Calendar</span>
+            <div class="card-title">Événements macro importants</div>
+            <span class="badge">Calendrier</span>
           </div>
           <p class="small">
-            Les krachs et grosses corrections sont souvent déclenchés autour de décisions Fed, BCE,
-            chiffres d’inflation, emploi US, etc.
+            Surveille les jours Fed, BCE, NFP (emploi US), inflation : ce sont souvent les déclencheurs de gros mouvements.
           </p>
           <div class="tradingview-widget-container" style="height: 420px;">
             <div class="tradingview-widget-container__widget"></div>
@@ -222,28 +212,30 @@
 
       </div>
 
-      <!-- COLONNE DROITE : RISQUE, VOLAT & SENTIMENT -->
+      <!-- COLONNE DROITE -->
       <div class="grid">
 
-        <!-- VIX + VOLATILITE -->
+        <!-- VIX + SPX + NASDAQ -->
         <div class="card">
           <div class="card-header">
-            <div class="card-title">Volatilité (VIX) & stress actions US</div>
-            <span class="badge">VIX live</span>
+            <div class="card-title">S&P 500, Nasdaq & VIX</div>
+            <span class="badge">Symbol overview</span>
           </div>
           <p class="small">
-            VIX &lt; 15 : calme relatif • 20–30 : nervosité • &gt; 30 : panique potentielle.
+            Combo volatilité + indices US. VIX &gt; 25 = attention, VIX &gt; 30 = stress élevé.
           </p>
-          <div class="tradingview-widget-container" style="height: 320px;">
+          <div class="tradingview-widget-container" style="height: 360px;">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
             {
               "symbols": [
-                ["CBOE:VIX|1D"]
+                ["FOREXCOM:SPXUSD|1D"],
+                ["FOREXCOM:NSXUSD|1D"],
+                ["TVC:VIX|1D"]
               ],
               "chartOnly": false,
               "width": "100%",
-              "height": "280",
+              "height": "320",
               "locale": "fr",
               "colorTheme": "dark",
               "isTransparent": false,
@@ -255,46 +247,48 @@
           </div>
         </div>
 
-        <!-- SENTIMENT : FEAR & GREED + LIENS -->
+        <!-- SENTIMENT & LIENS RISQUE -->
         <div class="card">
           <div class="card-header">
-            <div class="card-title">Sentiment & indices de peur</div>
-            <span class="badge">Liens & ressources</span>
+            <div class="card-title">Sentiment & stress crédit</div>
+            <span class="badge">Liens directs</span>
           </div>
           <p class="small">
-            Le sentiment extrême (peur ou euphorie) précède souvent les grands mouvements.
+            Ces liens complètent les données TradingView avec les vrais indicateurs de peur et de crédit.
           </p>
           <ul class="small">
             <li>
               <a href="https://edition.cnn.com/markets/fear-and-greed" target="_blank" rel="noopener noreferrer">
-                CNN Fear &amp; Greed Index (officiel)
+                CNN Fear &amp; Greed Index (sentiment global)
               </a>
             </li>
             <li>
-              <a href="https://www.finhacker.cz/fear-and-greed-index-historical-data-and-chart/" target="_blank" rel="noopener noreferrer">
-                Historique Fear &amp; Greed (graphique & stats)
+              <a href="https://fred.stlouisfed.org/series/BAMLH0A0HYM2" target="_blank" rel="noopener noreferrer">
+                Spread High Yield US (HY OAS)
+              </a>
+            </li>
+            <li>
+              <a href="https://fred.stlouisfed.org/series/MOVE" target="_blank" rel="noopener noreferrer">
+                MOVE Index (volatilité des taux US)
               </a>
             </li>
             <li>
               <a href="https://www.investing.com/indices/volatility-s-p-500" target="_blank" rel="noopener noreferrer">
-                VIX détaillé (Investing.com)
+                Détails VIX (graphique & stats)
               </a>
             </li>
           </ul>
           <p class="small">
-            Tu peux compléter ce bloc avec tes propres liens : spreads de crédit HY, MOVE Index, etc.
+            En pratique : spreads crédit qui montent + VIX qui explose + indices qui cassent leurs moyennes = alerte krach.
           </p>
         </div>
 
-        <!-- NEWS MARCHES -->
+        <!-- NEWS -->
         <div class="card">
           <div class="card-header">
             <div class="card-title">News marchés & macro</div>
-            <span class="badge">TradingView – Top Stories</span>
+            <span class="badge">Flux temps réel</span>
           </div>
-          <p class="small">
-            Les chocs majeurs viennent souvent d’une cassure macro / géopolitique : garde un œil sur les “Top stories”.
-          </p>
           <div class="tradingview-widget-container" style="height: 420px;">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
@@ -315,11 +309,15 @@
     </div>
 
     <p class="small" style="margin-top:24px;">
-      ⚠️ Ce dashboard ne donne aucune certitude : il aide à évaluer le contexte (volatilité, macro, sentiment),
-      mais un krach reste par nature imprévisible. Utilise-le comme outil de lecture de risque, pas comme oracle.
+      ⚠️ Ce dashboard n’est pas un oracle : il centralise les signaux (indices, VIX, crédit, macro, news)
+      pour t’aider à juger toi-même du risque de krach ou de grosse correction.
     </p>
 
   </div>
+
+  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+</body>
+</html>
 
   <!-- Script TradingView principal (optionnel pour certains widgets, utile en backup) -->
   <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
