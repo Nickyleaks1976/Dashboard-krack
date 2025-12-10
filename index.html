@@ -5,71 +5,115 @@
   <title>Dashboard Risque de Krach - Global Markets</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
+    :root {
+      --bg: #050816;
+      --bg-card: #0b1020;
+      --border: #1b2138;
+      --accent: #4f46e5;
+      --accent-soft: #111827;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --shadow: 0 18px 45px rgba(0,0,0,0.55);
+      --radius: 12px;
+    }
+    * {
+      box-sizing: border-box;
+    }
     body {
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       margin: 0;
       padding: 0;
-      background: #050816;
-      color: #f5f5f5;
+      background: radial-gradient(circle at top, #111827 0, #050816 55%, #020617 100%);
+      color: var(--text-main);
     }
     header {
-      padding: 16px 24px;
-      background: #0b1020;
-      border-bottom: 1px solid #222842;
+      padding: 18px 24px 10px;
+      background: linear-gradient(to right, #020617, #020617dd, #020617);
+      border-bottom: 1px solid #111827;
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      backdrop-filter: blur(12px);
     }
     h1 {
-      margin: 0 0 6px;
+      margin: 0 0 4px;
       font-size: 22px;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
     }
-    p {
-      margin: 0 0 8px;
-      color: #c1c7d4;
-      font-size: 14px;
+    h1 span {
+      color: #22c55e;
+    }
+    .subtitle {
+      margin: 0;
+      font-size: 13px;
+      color: var(--text-muted);
     }
     .container {
-      max-width: 1200px;
+      max-width: 1320px;
       margin: 0 auto;
-      padding: 16px 16px 32px;
+      padding: 18px 16px 32px;
     }
     .grid {
       display: grid;
       grid-template-columns: 1fr;
       gap: 18px;
     }
-    @media (min-width: 900px) {
+    @media (min-width: 960px) {
       .grid-2 {
-        grid-template-columns: 1.5fr 1fr;
+        grid-template-columns: 1.6fr 1.1fr;
       }
       .grid-3 {
-        grid-template-columns: repeat(3, 1fr);
+        grid-template-columns: 1.4fr 1.4fr 1.2fr;
       }
     }
     .card {
-      background: #0b1020;
-      border-radius: 10px;
-      padding: 12px 12px 4px;
-      border: 1px solid #1b2138;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+      background: radial-gradient(circle at top left, #111827 0, #020617 55%);
+      border-radius: var(--radius);
+      padding: 12px 12px 6px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top left, #4f46e522 0, transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
+    .card-inner {
+      position: relative;
+      z-index: 1;
     }
     .card-header {
       display: flex;
       justify-content: space-between;
       align-items: baseline;
       margin-bottom: 8px;
+      gap: 8px;
     }
     .card-title {
-      font-size: 14px;
+      font-size: 13px;
       font-weight: 600;
-      letter-spacing: .04em;
+      letter-spacing: .14em;
       text-transform: uppercase;
-      color: #9ca3ff;
+      color: #a5b4fc;
     }
     .badge {
       font-size: 11px;
       padding: 2px 8px;
       border-radius: 999px;
-      background: #1c243d;
+      background: #1e293b;
       color: #e5e7ff;
+      border: 1px solid #334155;
+    }
+    .small {
+      font-size: 12px;
+      color: var(--text-muted);
+      margin: 0 0 6px;
     }
     a {
       color: #60a5ff;
@@ -78,67 +122,87 @@
     a:hover {
       text-decoration: underline;
     }
-    .small {
-      font-size: 12px;
-      color: #9ca3af;
+    ul {
+      padding-left: 18px;
+      margin: 4px 0 8px;
+    }
+    ul li {
+      margin-bottom: 4px;
+    }
+    .ticker-card {
+      margin-bottom: 14px;
+    }
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      color: #6b7280;
+      margin: 4px 0 10px;
     }
   </style>
 </head>
 <body>
   <header>
-    <h1>Dashboard Global – Risque de Krach & Marchés</h1>
-    <p class="small">
-      Suivi en temps réel des marchés US / Europe / Asie, volatilité, sentiment & macro.
+    <h1><span>RiskWatch</span> • Dashboard Global</h1>
+    <p class="subtitle">
+      Indices, volatilité (VIX), macro & news en temps réel – lecture du risque de krach et de corrections majeures.
     </p>
   </header>
 
   <div class="container">
 
-    <!-- BANDEAU TICKER GLOBAL -->
-    <div class="card">
-      <div class="card-header">
-        <div class="card-title">Ticker global (indices, or, pétrole, crypto)</div>
-        <span class="badge">Live TradingView</span>
+    <!-- TICKER GLOBAL -->
+    <div class="card ticker-card">
+      <div class="card-inner">
+        <div class="card-header">
+          <div class="card-title">Flux marchés en direct</div>
+          <span class="badge">Ticker global</span>
+        </div>
+        <div class="tradingview-widget-container">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
+          {
+            "symbols": [
+              {"proName": "FOREXCOM:SPXUSD", "title": "S&P 500"},
+              {"proName": "FOREXCOM:NSXUSD", "title": "Nasdaq 100"},
+              {"proName": "CURRENCYCOM:EU50", "title": "Euro Stoxx 50"},
+              {"proName": "INDEX:CAC40", "title": "CAC 40"},
+              {"proName": "INDEX:DEU40", "title": "DAX"},
+              {"proName": "INDEX:NKY", "title": "Nikkei 225"},
+              {"proName": "TVC:VIX", "title": "VIX"},
+              {"proName": "TVC:US10Y", "title": "US 10Y"},
+              {"proName": "TVC:GOLD", "title": "Or"},
+              {"proName": "TVC:UKOIL", "title": "Brent"},
+              {"proName": "CRYPTO:BTCUSD", "title": "Bitcoin"}
+            ],
+            "showSymbolLogo": true,
+            "colorTheme": "dark",
+            "isTransparent": false,
+            "displayMode": "adaptive",
+            "locale": "fr"
+          }
+          </script>
+        </div>
+        <p class="small">
+          Lecture instantanée : indices mondiaux, VIX, taux US 10 ans, or, pétrole, bitcoin.
+        </p>
       </div>
-      <div class="tradingview-widget-container">
-        <div class="tradingview-widget-container__widget"></div>
-        <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-ticker-tape.js" async>
-        {
-          "symbols": [
-            {"proName": "FOREXCOM:SPXUSD", "title": "S&P 500"},
-            {"proName": "FOREXCOM:NSXUSD", "title": "Nasdaq 100"},
-            {"proName": "CURRENCYCOM:EU50", "title": "Euro Stoxx 50"},
-            {"proName": "INDEX:CAC40", "title": "CAC 40"},
-            {"proName": "INDEX:NKY", "title": "Nikkei 225"},
-            {"proName": "TVC:VIX", "title": "VIX"},
-            {"proName": "TVC:US10Y", "title": "US 10Y"},
-            {"proName": "TVC:GOLD", "title": "Or"},
-            {"proName": "TVC:UKOIL", "title": "Brent"},
-            {"proName": "CRYPTO:BTCUSD", "title": "Bitcoin"}
-          ],
-          "showSymbolLogo": true,
-          "colorTheme": "dark",
-          "isTransparent": false,
-          "displayMode": "adaptive",
-          "locale": "fr"
-        }
-        </script>
-      </div>
-      <p class="small">En un coup d’œil : indices, volatilité, taux, or, pétrole, bitcoin.</p>
     </div>
 
-    <!-- GRID PRINCIPALE -->
-    <div class="grid grid-2" style="margin-top:16px;">
+    <!-- LIGNE 1 : INDICES + VIX -->
+    <div class="section-label">Vue marchés & volatilité</div>
+    <div class="grid grid-2">
 
-      <!-- COLONNE GAUCHE -->
-      <div class="grid">
-
-        <!-- MARCHÉS PAR RÉGION -->
-        <div class="card">
+      <!-- INDICES PAR RÉGION -->
+      <div class="card">
+        <div class="card-inner">
           <div class="card-header">
             <div class="card-title">Indices majeurs par région</div>
-            <span class="badge">Market overview</span>
+            <span class="badge">US • Europe • Asie</span>
           </div>
+          <p class="small">
+            Compare la dynamique des grandes zones : une chute synchronisée US / Europe / Asie est un vrai signal de stress global.
+          </p>
           <div class="tradingview-widget-container" style="height: 520px;">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js" async>
@@ -184,47 +248,58 @@
             </script>
           </div>
         </div>
+      </div>
 
-        <!-- CALENDRIER ÉCONOMIQUE -->
-        <div class="card">
+      <!-- VIX EN DIRECT (GRAND GRAPHIQUE) -->
+      <div class="card">
+        <div class="card-inner">
           <div class="card-header">
-            <div class="card-title">Événements macro importants</div>
-            <span class="badge">Calendrier</span>
+            <div class="card-title">Indice de volatilité VIX</div>
+            <span class="badge">Live • advanced chart</span>
           </div>
           <p class="small">
-            Surveille les jours Fed, BCE, NFP (emploi US), inflation : ce sont souvent les déclencheurs de gros mouvements.
+            VIX &lt; 15 : calme relatif • 15–25 : nervosité • 25–30 : stress élevé • &gt; 30 : risque de panique / krach.
           </p>
-          <div class="tradingview-widget-container" style="height: 420px;">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-economic-calendar.js" async>
+          <div class="tradingview-widget-container" style="height: 520px;">
+            <div id="vix-chart" class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-advanced-chart.js" async>
             {
-              "colorTheme": "dark",
-              "isTransparent": false,
-              "width": "100%",
-              "height": "380",
+              "autosize": true,
+              "symbol": "CBOE:VIX",
+              "interval": "60",
+              "timezone": "Etc/UTC",
+              "theme": "dark",
+              "style": "1",
               "locale": "fr",
-              "importanceFilter": "-1,0,1",
-              "countryFilter": "us,eu,gb,jp"
+              "enable_publishing": false,
+              "hide_side_toolbar": false,
+              "allow_symbol_change": false,
+              "calendar": false,
+              "hide_volume": true,
+              "support_host": "https://www.tradingview.com"
             }
             </script>
           </div>
         </div>
-
       </div>
 
-      <!-- COLONNE DROITE -->
-      <div class="grid">
+    </div>
 
-        <!-- VIX + SPX + NASDAQ -->
-        <div class="card">
+    <!-- LIGNE 2 : S&P / NASDAQ + CALENDRIER + SENTIMENT -->
+    <div class="section-label" style="margin-top:22px;">Momentum US, macro & sentiment</div>
+    <div class="grid grid-3">
+
+      <!-- S&P + NASDAQ + VIX MINI -->
+      <div class="card">
+        <div class="card-inner">
           <div class="card-header">
-            <div class="card-title">S&P 500, Nasdaq & VIX</div>
-            <span class="badge">Symbol overview</span>
+            <div class="card-title">S&P 500 • Nasdaq • mini VIX</div>
+            <span class="badge">Vue combinée</span>
           </div>
           <p class="small">
-            Combo volatilité + indices US. VIX &gt; 25 = attention, VIX &gt; 30 = stress élevé.
+            Suis en parallèle indices US et VIX : cassure des supports + envolée du VIX = début de régime de stress.
           </p>
-          <div class="tradingview-widget-container" style="height: 360px;">
+          <div class="tradingview-widget-container" style="height: 320px;">
             <div class="tradingview-widget-container__widget"></div>
             <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js" async>
             {
@@ -235,7 +310,7 @@
               ],
               "chartOnly": false,
               "width": "100%",
-              "height": "320",
+              "height": "280",
               "locale": "fr",
               "colorTheme": "dark",
               "isTransparent": false,
@@ -246,15 +321,44 @@
             </script>
           </div>
         </div>
+      </div>
 
-        <!-- SENTIMENT & LIENS RISQUE -->
-        <div class="card">
+      <!-- CALENDRIER ÉCONOMIQUE -->
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-title">Événements macro clés</div>
+            <span class="badge">Calendrier</span>
+          </div>
+          <p class="small">
+            Décisions Fed / BCE, NFP, inflation : ce sont souvent les déclencheurs de mouvement violent.
+          </p>
+          <div class="tradingview-widget-container" style="height: 320px;">
+            <div class="tradingview-widget-container__widget"></div>
+            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-economic-calendar.js" async>
+            {
+              "colorTheme": "dark",
+              "isTransparent": false,
+              "width": "100%",
+              "height": "280",
+              "locale": "fr",
+              "importanceFilter": "-1,0,1",
+              "countryFilter": "us,eu,gb,jp"
+            }
+            </script>
+          </div>
+        </div>
+      </div>
+
+      <!-- SENTIMENT & SPREADS CRÉDIT -->
+      <div class="card">
+        <div class="card-inner">
           <div class="card-header">
             <div class="card-title">Sentiment & stress crédit</div>
             <span class="badge">Liens directs</span>
           </div>
           <p class="small">
-            Ces liens complètent les données TradingView avec les vrais indicateurs de peur et de crédit.
+            Complète les charts avec les vrais indicateurs de “peur” et de tension sur le crédit.
           </p>
           <ul class="small">
             <li>
@@ -264,62 +368,63 @@
             </li>
             <li>
               <a href="https://fred.stlouisfed.org/series/BAMLH0A0HYM2" target="_blank" rel="noopener noreferrer">
-                Spread High Yield US (HY OAS)
+                Spread High Yield US (HY OAS – FRED)
               </a>
             </li>
             <li>
               <a href="https://fred.stlouisfed.org/series/MOVE" target="_blank" rel="noopener noreferrer">
-                MOVE Index (volatilité des taux US)
+                MOVE Index (volatilité des taux US – FRED)
               </a>
             </li>
             <li>
               <a href="https://www.investing.com/indices/volatility-s-p-500" target="_blank" rel="noopener noreferrer">
-                Détails VIX (graphique & stats)
+                VIX détaillé (graph & statistiques)
               </a>
             </li>
           </ul>
           <p class="small">
-            En pratique : spreads crédit qui montent + VIX qui explose + indices qui cassent leurs moyennes = alerte krach.
+            Combo danger : HY en forte hausse + MOVE &gt; 100 + VIX qui dépasse 30 + indices sous leurs moyennes 200 jours.
           </p>
         </div>
+      </div>
 
-        <!-- NEWS -->
-        <div class="card">
-          <div class="card-header">
-            <div class="card-title">News marchés & macro</div>
-            <span class="badge">Flux temps réel</span>
-          </div>
-          <div class="tradingview-widget-container" style="height: 420px;">
-            <div class="tradingview-widget-container__widget"></div>
-            <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
-            {
-              "feedMode": "all_symbols",
-              "colorTheme": "dark",
-              "isTransparent": false,
-              "displayMode": "compact",
-              "width": "100%",
-              "height": "380",
-              "locale": "fr"
-            }
-            </script>
-          </div>
+    </div>
+
+    <!-- LIGNE 3 : NEWS -->
+    <div class="section-label" style="margin-top:22px;">News & flux temps réel</div>
+    <div class="card">
+      <div class="card-inner">
+        <div class="card-header">
+          <div class="card-title">Actualités marchés & macro</div>
+          <span class="badge">Timeline TradingView</span>
         </div>
-
+        <p class="small">
+          Les krachs sont souvent déclenchés par un événement précis : surveille les gros titres pour mettre en contexte les mouvements de prix.
+        </p>
+        <div class="tradingview-widget-container" style="height: 420px;">
+          <div class="tradingview-widget-container__widget"></div>
+          <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-timeline.js" async>
+          {
+            "feedMode": "all_symbols",
+            "colorTheme": "dark",
+            "isTransparent": false,
+            "displayMode": "compact",
+            "width": "100%",
+            "height": "380",
+            "locale": "fr"
+          }
+          </script>
+        </div>
       </div>
     </div>
 
-    <p class="small" style="margin-top:24px;">
-      ⚠️ Ce dashboard n’est pas un oracle : il centralise les signaux (indices, VIX, crédit, macro, news)
-      pour t’aider à juger toi-même du risque de krach ou de grosse correction.
+    <p class="small" style="margin-top:20px;">
+      ⚠️ Ce dashboard ne prédit que dalle : il centralise les signaux (indices, VIX, macro, spreads, news) pour t’aider à juger toi-même du régime de marché
+      : calme, volatilité, correction ou krach.
     </p>
 
   </div>
 
-  <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-</body>
-</html>
-
-  <!-- Script TradingView principal (optionnel pour certains widgets, utile en backup) -->
   <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 </body>
 </html>
